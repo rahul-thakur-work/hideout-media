@@ -20,7 +20,39 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #f8ddbf;
+  color: #2f0003;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Inter", "Segoe UI", sans-serif;
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+/* Parallax utility classes (pure CSS scroll speed illusion) */
+.parallax-slow {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.parallax-medium {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.parallax-fast {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.parallax-card {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.parallax-tagline {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
