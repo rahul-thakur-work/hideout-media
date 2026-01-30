@@ -1,23 +1,28 @@
 import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import BrandsStrip from "@/components/BrandsStrip";
-import WorkSection from "@/components/WorkSection";
+import VideoHero from "@/components/VideoHero";
+import AboutComedy from "@/components/AboutComedy";
+import BrandSlider from "@/components/BrandSlider";
 import ServicesSection from "@/components/ServicesSection";
-import AboutSection from "@/components/AboutSection";
-import ContactSection from "@/components/ContactSection";
+import ComedianRoster from "@/components/ComedianRoster";
+import ComedyClubSection from "@/components/ComedyClubSection";
+import WorkShowcase from "@/components/WorkShowcase";
+import MinimalContact from "@/components/MinimalContact";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#f8ddbf] text-[#2f0003]">
+    <div className="min-h-screen bg-white text-[#2f0003]">
       <Header />
       <main className="relative">
-        <Hero />
-        <BrandsStrip />
-        <WorkSection />
+        <VideoHero />
+        <AboutComedy />
+        <BrandSlider />
         <ServicesSection />
-        <AboutSection />
-        <ContactSection />
+        <ComedianRoster />
+        <WorkShowcase />
+        <ComedyClubSection />
+        
+        <MinimalContact />
         <Footer />
       </main>
     </div>
