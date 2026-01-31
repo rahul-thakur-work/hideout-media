@@ -4,12 +4,13 @@ import Artist from "@/lib/models/Artist";
 
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     await dbConnect();
 
-    const artist = await Artist.findOne({ slug: params.slug }).lean();
+    const { slug } = await params;
+    const artist = await Artist.findOne({ slug }).lean();
 
     if (!artist) {
       return NextResponse.json(
@@ -29,14 +30,15 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     await dbConnect();
 
+    const { slug } = await params;
     const body = await request.json();
 
-    const artist = await Artist.findOneAndUpdate({ slug: params.slug }, body, {
+    const artist = await Artist.findOneAndUpdate({ slug }, body, {
       new: true,
       runValidators: true,
     });
@@ -59,12 +61,13 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     await dbConnect();
 
-    const artist = await Artist.findOneAndDelete({ slug: params.slug });
+    const { slug } = await params;
+    const artist = await Artist.findOneAndDelete({ slug });
 
     if (!artist) {
       return NextResponse.json(

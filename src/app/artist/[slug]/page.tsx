@@ -6,13 +6,14 @@ import dbConnect from "@/lib/mongodb";
 import Artist from "@/lib/models/Artist";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await dbConnect();
-  const artist = await Artist.findOne({ slug: params.slug }).lean();
+  const { slug } = await params;
+  const artist = await Artist.findOne({ slug }).populate('category').lean();
 
   if (!artist) {
     return {
@@ -20,8 +21,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const categoryName = typeof artist.category === 'object' && artist.category !== null && 'name' in artist.category
+    ? (artist.category as any).name
+    : 'Artist';
+
   return {
-    title: `Book ${artist.name} | ${artist.category} | Hideout Media`,
+    title: `Book ${artist.name} | ${categoryName} | Hideout Media`,
     description: artist.shortDescription,
   };
 }
@@ -29,18 +34,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ArtistProfilePage({ params }: Props) {
   await dbConnect();
 
-  const artist = await Artist.findOne({ slug: params.slug }).lean();
+  const { slug } = await params;
+  const artist = await Artist.findOne({ slug }).populate('category').lean();
 
   if (!artist) {
     notFound();
   }
 
-  const categoryDisplay = {
-    comedian: "Comedian",
-    "dj-musician": "DJ / Musician",
-    "motivational-speaker": "Motivational Speaker",
-    anchor: "Anchor / Emcee",
-  }[artist.category];
+  const categoryName = typeof artist.category === 'object' && artist.category !== null && 'name' in artist.category
+    ? (artist.category as any).name
+    : 'Artist';
+
+  const categoryDisplay = categoryName;
 
   return (
     <div className="min-h-screen bg-[#f8ddbf] pt-20">

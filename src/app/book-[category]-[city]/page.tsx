@@ -7,13 +7,17 @@ import City from "@/lib/models/City";
 import Category from "@/lib/models/Category";
 
 type Props = {
-  params: { category: string; city: string };
+  params: Promise<{ category: string; city: string }>;
 };
+
+// Make this page dynamic (no static generation)
+export const dynamic = 'force-dynamic';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const categoryName = params.category.replace(/-/g, " ");
-  const cityName = params.city.replace(/-/g, " ");
+  const { category, city } = await params;
+  const categoryName = category?.replace(/-/g, " ") || "Artist";
+  const cityName = city?.replace(/-/g, " ") || "India";
 
   return {
     title: `Book ${categoryName} in ${cityName} | Hideout Media`,
@@ -24,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CategoryCityPage({ params }: Props) {
   await dbConnect();
 
-  const { category, city } = params;
+  const { category, city } = await params;
 
   // Fetch artists
   const artists = await Artist.find({

@@ -1,27 +1,28 @@
-import clientPromise from "@/lib/mongodb";
+import dbConnect from "@/lib/mongodb";
 import { NextResponse } from "next/server";
+import mongoose from "mongoose";
 
 export async function GET() {
   try {
-    const client = await clientPromise;
-    const db = client.db(); // uses the default database from the connection string
+    await dbConnect();
 
-    const result = await db.collection("test").insertOne({
-      message: "Hello from MongoDB",
-      createdAt: new Date(),
-    });
+    // Test connection by checking if mongoose is connected
+    const isConnected = mongoose.connection.readyState === 1;
 
     return NextResponse.json(
-      { ok: true, insertedId: result.insertedId },
+      { 
+        ok: true, 
+        message: "MongoDB connected via Mongoose",
+        connected: isConnected,
+        database: mongoose.connection.db?.databaseName || "N/A"
+      },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error("[mongo-test] error connecting to MongoDB:", error);
     return NextResponse.json(
-      { ok: false, error: "Failed to connect to MongoDB" },
+      { ok: false, error: error.message || "Failed to connect to MongoDB" },
       { status: 500 }
     );
   }
 }
-
-

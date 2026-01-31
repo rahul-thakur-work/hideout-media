@@ -3,6 +3,9 @@ import dbConnect from "@/lib/mongodb";
 import City from "@/lib/models/City";
 import Category from "@/lib/models/Category";
 
+// Make this page dynamic (no static generation at build time)
+export const dynamic = 'force-dynamic';
+
 export default async function BrowsePage() {
   await dbConnect();
 
