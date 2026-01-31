@@ -1,11 +1,19 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-black py-12 text-white">
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex flex-col items-center justify-between gap-8 sm:flex-row">
-          <div>
-            <p className="text-lg font-bold">Hideout</p>
-            <p className="mt-1 text-sm text-white/40">Comedy Collective</p>
+          <div className="flex flex-col items-center sm:items-start">
+            <Image
+              src="/assets/logo.png"
+              alt="Hideout Media"
+              width={100}
+              height={33}
+              className="h-auto w-24"
+            />
+            <p className="mt-2 text-sm text-white/40">Comedy Collective</p>
           </div>
 
           <div className="flex gap-8 text-sm">

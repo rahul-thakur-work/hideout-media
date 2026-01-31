@@ -1,11 +1,19 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-black/80 text-white backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
-        <Link href="/" className="text-xl font-bold">
-          Hideout
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/assets/logo.png"
+            alt="Hideout Media"
+            width={120}
+            height={40}
+            className="h-auto w-16"
+            priority
+          />
         </Link>
         <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
           <Link href="/#about" className="hover:text-[#ee0202]">
